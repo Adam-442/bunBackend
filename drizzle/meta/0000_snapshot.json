@@ -1,0 +1,503 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "id": "337a80b9-5e51-499f-9856-0587887f94e5",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "AccountPermissions": {
+      "name": "AccountPermissions",
+      "columns": {
+        "AccountID": {
+          "name": "AccountID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "PermissionID": {
+          "name": "PermissionID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "AccountPermissions_AccountID_NewAccountRequests_AccountID_fk": {
+          "name": "AccountPermissions_AccountID_NewAccountRequests_AccountID_fk",
+          "tableFrom": "AccountPermissions",
+          "tableTo": "NewAccountRequests",
+          "columnsFrom": [
+            "AccountID"
+          ],
+          "columnsTo": [
+            "AccountID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "AccountPermissions_PermissionID_Permissions_PermissionID_fk": {
+          "name": "AccountPermissions_PermissionID_Permissions_PermissionID_fk",
+          "tableFrom": "AccountPermissions",
+          "tableTo": "Permissions",
+          "columnsFrom": [
+            "PermissionID"
+          ],
+          "columnsTo": [
+            "PermissionID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "Activities": {
+      "name": "Activities",
+      "columns": {
+        "ActivityID": {
+          "name": "ActivityID",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "ActivityName": {
+          "name": "ActivityName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "Activities_ActivityName_unique": {
+          "name": "Activities_ActivityName_unique",
+          "columns": [
+            "ActivityName"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "AddActivityRequests": {
+      "name": "AddActivityRequests",
+      "columns": {
+        "AddActivityID": {
+          "name": "AddActivityID",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "RequestID": {
+          "name": "RequestID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "LicenceID": {
+          "name": "LicenceID",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "AddActivityRequests_RequestID_Requests_RequestID_fk": {
+          "name": "AddActivityRequests_RequestID_Requests_RequestID_fk",
+          "tableFrom": "AddActivityRequests",
+          "tableTo": "Requests",
+          "columnsFrom": [
+            "RequestID"
+          ],
+          "columnsTo": [
+            "RequestID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "CompanyActivities": {
+      "name": "CompanyActivities",
+      "columns": {
+        "ActivityRequestID": {
+          "name": "ActivityRequestID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "ActivityID": {
+          "name": "ActivityID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "CompanyActivities_ActivityRequestID_AddActivityRequests_AddActivityID_fk": {
+          "name": "CompanyActivities_ActivityRequestID_AddActivityRequests_AddActivityID_fk",
+          "tableFrom": "CompanyActivities",
+          "tableTo": "AddActivityRequests",
+          "columnsFrom": [
+            "ActivityRequestID"
+          ],
+          "columnsTo": [
+            "AddActivityID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "CompanyActivities_ActivityID_Activities_ActivityID_fk": {
+          "name": "CompanyActivities_ActivityID_Activities_ActivityID_fk",
+          "tableFrom": "CompanyActivities",
+          "tableTo": "Activities",
+          "columnsFrom": [
+            "ActivityID"
+          ],
+          "columnsTo": [
+            "ActivityID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "InspectionRequests": {
+      "name": "InspectionRequests",
+      "columns": {
+        "InspectionID": {
+          "name": "InspectionID",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "RequestID": {
+          "name": "RequestID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "InspectionTime": {
+          "name": "InspectionTime",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "InspectionType": {
+          "name": "InspectionType",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "InspectionRequests_RequestID_Requests_RequestID_fk": {
+          "name": "InspectionRequests_RequestID_Requests_RequestID_fk",
+          "tableFrom": "InspectionRequests",
+          "tableTo": "Requests",
+          "columnsFrom": [
+            "RequestID"
+          ],
+          "columnsTo": [
+            "RequestID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "NewAccountRequests": {
+      "name": "NewAccountRequests",
+      "columns": {
+        "AccountID": {
+          "name": "AccountID",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "RequestID": {
+          "name": "RequestID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "RequesterName": {
+          "name": "RequesterName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "ApplicantName": {
+          "name": "ApplicantName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "Username": {
+          "name": "Username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "ContactEmail": {
+          "name": "ContactEmail",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "NewAccountRequests_RequestID_Requests_RequestID_fk": {
+          "name": "NewAccountRequests_RequestID_Requests_RequestID_fk",
+          "tableFrom": "NewAccountRequests",
+          "tableTo": "Requests",
+          "columnsFrom": [
+            "RequestID"
+          ],
+          "columnsTo": [
+            "RequestID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "NewLicenceRequests": {
+      "name": "NewLicenceRequests",
+      "columns": {
+        "LicenceID": {
+          "name": "LicenceID",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "RequestID": {
+          "name": "RequestID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "LicenceType": {
+          "name": "LicenceType",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "IsOffice": {
+          "name": "IsOffice",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "OfficeName": {
+          "name": "OfficeName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "OfficeServiceNumber": {
+          "name": "OfficeServiceNumber",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "RequestDate": {
+          "name": "RequestDate",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "Activities": {
+          "name": "Activities",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "NewLicenceRequests_RequestID_Requests_RequestID_fk": {
+          "name": "NewLicenceRequests_RequestID_Requests_RequestID_fk",
+          "tableFrom": "NewLicenceRequests",
+          "tableTo": "Requests",
+          "columnsFrom": [
+            "RequestID"
+          ],
+          "columnsTo": [
+            "RequestID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "Permissions": {
+      "name": "Permissions",
+      "columns": {
+        "PermissionID": {
+          "name": "PermissionID",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "PermissionName": {
+          "name": "PermissionName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "Permissions_PermissionName_unique": {
+          "name": "Permissions_PermissionName_unique",
+          "columns": [
+            "PermissionName"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "Requests": {
+      "name": "Requests",
+      "columns": {
+        "RequestID": {
+          "name": "RequestID",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "RequestType": {
+          "name": "RequestType",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "RequestStatus": {
+          "name": "RequestStatus",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "CompanyName": {
+          "name": "CompanyName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "StampLicenceRequests": {
+      "name": "StampLicenceRequests",
+      "columns": {
+        "StampLicenceID": {
+          "name": "StampLicenceID",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "RequestID": {
+          "name": "RequestID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "RequestDate": {
+          "name": "RequestDate",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "LicenceID": {
+          "name": "LicenceID",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "StampLicenceRequests_RequestID_Requests_RequestID_fk": {
+          "name": "StampLicenceRequests_RequestID_Requests_RequestID_fk",
+          "tableFrom": "StampLicenceRequests",
+          "tableTo": "Requests",
+          "columnsFrom": [
+            "RequestID"
+          ],
+          "columnsTo": [
+            "RequestID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}
