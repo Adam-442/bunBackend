@@ -1,7 +1,7 @@
 // Data coming from the front-end inside the CSV file follows this structure:
 
 export type RequestsType = {
-    RequestID?: number;
+    RequestID: number;
     RequestType: 1 | 2 | 3 | 4 | 5;
     RequestStatus: 1 | 2 | 3;
     RequestData: NewLicenceRequestsType | NewAccountRequestsType | InspectionRequestsType | AddActivityRequestsType | StampLicenceRequestsType;

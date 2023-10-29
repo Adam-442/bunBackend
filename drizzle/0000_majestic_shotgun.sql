@@ -1,6 +1,7 @@
 CREATE TABLE `AccountPermissions` (
 	`AccountID` integer NOT NULL,
 	`PermissionID` integer NOT NULL,
+	PRIMARY KEY(`AccountID`, `PermissionID`),
 	FOREIGN KEY (`AccountID`) REFERENCES `NewAccountRequests`(`AccountID`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`PermissionID`) REFERENCES `Permissions`(`PermissionID`) ON UPDATE no action ON DELETE no action
 );
@@ -20,6 +21,7 @@ CREATE TABLE `AddActivityRequests` (
 CREATE TABLE `CompanyActivities` (
 	`ActivityRequestID` integer NOT NULL,
 	`ActivityID` integer NOT NULL,
+	PRIMARY KEY(`ActivityID`, `ActivityRequestID`),
 	FOREIGN KEY (`ActivityRequestID`) REFERENCES `AddActivityRequests`(`AddActivityID`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`ActivityID`) REFERENCES `Activities`(`ActivityID`) ON UPDATE no action ON DELETE no action
 );
@@ -48,7 +50,7 @@ CREATE TABLE `NewLicenceRequests` (
 	`LicenceType` text,
 	`IsOffice` integer,
 	`OfficeName` text,
-	`OfficeServiceNumber` integer,
+	`OfficeServiceNumber` text,
 	`RequestDate` text NOT NULL,
 	`Activities` text,
 	FOREIGN KEY (`RequestID`) REFERENCES `Requests`(`RequestID`) ON UPDATE no action ON DELETE no action

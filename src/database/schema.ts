@@ -1,4 +1,4 @@
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { integer, primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const RequestsTable = sqliteTable('Requests', {
     RequestID: integer('RequestID').primaryKey(),
@@ -13,7 +13,7 @@ export const NewLicenceRequestsTable = sqliteTable('NewLicenceRequests', {
     LicenceType: text(`LicenceType`),
     IsOffice: integer('IsOffice', {mode: 'boolean'}),
     OfficeName: text('OfficeName'),
-    OfficeServiceNumber: integer('OfficeServiceNumber'),
+    OfficeServiceNumber: text('OfficeServiceNumber'),
     RequestDate: text('RequestDate').notNull(),
     Activities: text('Activities'),
 });
@@ -55,11 +55,16 @@ export const PermissionsTable = sqliteTable('Permissions', {
     PermissionID: integer('PermissionID').primaryKey(),
     PermissionName: text('PermissionName').unique(),
 });
+
+// export const AccountPermissionsRelation =  relations('AccountPermissions', )
   
 export const AccountPermissionsTable = sqliteTable('AccountPermissions', {
-    AccountID: integer('AccountID').references(() => NewAccountRequestsTable.AccountID).notNull(),
-    PermissionID: integer('PermissionID').references(() => PermissionsTable.PermissionID).notNull(),
-});
+        AccountID: integer('AccountID').references(() => NewAccountRequestsTable.AccountID).notNull(),
+        PermissionID: integer('PermissionID').references(() => PermissionsTable.PermissionID).notNull(),
+    }, (t) => ({
+        pk: primaryKey(t.AccountID, t.PermissionID),
+    })
+);
   
 export const ActivitiesTable = sqliteTable('Activities', {
     ActivityID: integer('ActivityID').primaryKey(),
@@ -67,6 +72,9 @@ export const ActivitiesTable = sqliteTable('Activities', {
 });
   
 export const CompanyActivitiesTable = sqliteTable('CompanyActivities', {
-    ActivityRequestID: integer('ActivityRequestID').references(() => AddActivityRequestsTable.AddActivityID).notNull(),
-    ActivityID: integer('ActivityID').references(() => ActivitiesTable.ActivityID).notNull(),
-});
+        ActivityRequestID: integer('ActivityRequestID').references(() => AddActivityRequestsTable.AddActivityID).notNull(),
+        ActivityID: integer('ActivityID').references(() => ActivitiesTable.ActivityID).notNull(),
+    }, (t) => ({
+        pk: primaryKey(t.ActivityID, t.ActivityRequestID),
+    })
+);

@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "337a80b9-5e51-499f-9856-0587887f94e5",
+  "id": "018001d5-95aa-44d6-b183-bd1be0898442",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "AccountPermissions": {
@@ -51,7 +51,14 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "AccountPermissions_AccountID_PermissionID_pk": {
+          "columns": [
+            "AccountID",
+            "PermissionID"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     },
     "Activities": {
@@ -176,7 +183,14 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "CompanyActivities_ActivityID_ActivityRequestID_pk": {
+          "columns": [
+            "ActivityID",
+            "ActivityRequestID"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     },
     "InspectionRequests": {
@@ -335,7 +349,7 @@
         },
         "OfficeServiceNumber": {
           "name": "OfficeServiceNumber",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false

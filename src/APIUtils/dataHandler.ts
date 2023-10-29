@@ -2,9 +2,7 @@ import * as ins from "src/database/inserts";
 import { RequestsType } from "./csvDataTypes";
 
 export function uploadData(requests: RequestsType[]) {
-    requests.forEach(request => {
-        console.log(request);
-        
+    requests.forEach((request) => {
         switch (request.RequestType) {
             case 1:
                 ins.addNewLicenceRequest(request);
@@ -22,7 +20,8 @@ export function uploadData(requests: RequestsType[]) {
                 ins.addStampLicenceRequest(request);
                 break;
             default:
-                throw new Error('Invalid request type');
+                console.count('error');
+                break;
         }
     });
 

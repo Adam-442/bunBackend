@@ -4,7 +4,7 @@ import { uploadData } from "./APIUtils/dataHandler";
 
 const app = new Elysia();
 
-app.get("/", () => `This is the backend, Try http://${app.server?.hostname}:${app.server?.port}/uploadData`);
+app.get("/", () => `This is the backend, Try posting to http://${app.server?.hostname}:${app.server?.port}/uploadData`);
 
 app.post("/uploadData", ({ body }) => {
   try {
@@ -13,7 +13,6 @@ app.post("/uploadData", ({ body }) => {
     const end = performance.now();
     return new Response(`${uploadStatus} in ${end-start}ms`, { status: 200 });
   } catch (error) {
-    console.log("Error: " + error)
     return new Response("Error: " + error, { status: 400 });
   }
 });
