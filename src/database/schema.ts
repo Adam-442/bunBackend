@@ -53,7 +53,7 @@ export const StampLicenceRequestsTable = sqliteTable('StampLicenceRequests', {
   
 export const PermissionsTable = sqliteTable('Permissions', {
     PermissionID: integer('PermissionID').primaryKey(),
-    PermissionName: text('PermissionName').unique(),
+    PermissionName: text('PermissionName').unique().notNull(),
 });
 
 // export const AccountPermissionsRelation =  relations('AccountPermissions', )
@@ -68,7 +68,7 @@ export const AccountPermissionsTable = sqliteTable('AccountPermissions', {
   
 export const ActivitiesTable = sqliteTable('Activities', {
     ActivityID: integer('ActivityID').primaryKey(),
-    ActivityName: text('ActivityName').unique(),
+    ActivityName: text('ActivityName').unique().notNull(),
 });
   
 export const CompanyActivitiesTable = sqliteTable('CompanyActivities', {

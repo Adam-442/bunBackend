@@ -8,7 +8,7 @@ CREATE TABLE `AccountPermissions` (
 --> statement-breakpoint
 CREATE TABLE `Activities` (
 	`ActivityID` integer PRIMARY KEY NOT NULL,
-	`ActivityName` text
+	`ActivityName` text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `AddActivityRequests` (
@@ -58,7 +58,7 @@ CREATE TABLE `NewLicenceRequests` (
 --> statement-breakpoint
 CREATE TABLE `Permissions` (
 	`PermissionID` integer PRIMARY KEY NOT NULL,
-	`PermissionName` text
+	`PermissionName` text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `Requests` (

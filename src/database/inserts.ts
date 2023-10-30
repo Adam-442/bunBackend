@@ -2,9 +2,10 @@ import { AddActivityRequestsType, InspectionRequestsType, NewAccountRequestsType
 import { db } from "./db";
 import * as schema from "./schema";
 import { getActivity, getPermission, getRequest } from "./selects";
+import { sql } from "drizzle-orm";
 
 async function addRequest(request: RequestsType) {
-    if (!request.RequestID || (await getRequest(request.RequestID)).length != 0) {
+    if (!request.RequestID || (await getRequest({RequestID: request.RequestID})).length != 0) {
         throw Error('Invalid request ID');
     }
 
@@ -39,7 +40,7 @@ export async function addNewLicenceRequest(request: RequestsType) {
             Activities: data.Activities,
         }).returning();
     } catch (e) {
-        console.count('error')
+        console.count('NewLicenceRequest already added or invalid')
     }
 }
     
@@ -56,19 +57,15 @@ export async function addNewAccountRequest(request: RequestsType) {
             ContactEmail: data.ContactEmail,
         }).returning();
 
-        // data.Permissions.forEach(async (permissionName) => {
-        //     const permissionData = await getPermission({ name: permissionName });
-
-        //     let permissionID: number;
-        //     if (permissionData.length === 0) {permissionID = (await addPermission(permissionName))[0].PermissionID;}
-        //     else {permissionID = permissionData[0].PermissionID;}
-
-        //     // await addAccountPermission(account[0].AccountID, permissionID);
-        // });
+        data.Permissions.forEach(async (permissionName) => {
+            const permission = await getPermission({name: permissionName});
+            permission.length > 0 ?
+            await addAccountPermission(account[0].AccountID, permission[0].PermissionID): null;
+        })
 
         return account;
     } catch (e) {
-        console.count('error')
+        console.count('NewAccountRequest already added or invalid')
     }
 }
 
@@ -82,7 +79,7 @@ export async function addInspectionRequest(request: RequestsType) {
             InspectionType: data.InspectionType,
         }).returning();
     } catch (e) {
-        console.count('error')
+        console.count('InspectionRequest already added or invalid')
     }
 }
 
@@ -96,19 +93,15 @@ export async function addAddActivityRequest(request: RequestsType) {
             LicenceID: data.LicenceID,
         }).returning();
 
-        // data.Activities.forEach(async (activityName) => {
-        //     const activityData = await getActivity({ name: activityName });
-
-        //     let activityID: number;
-        //     if (activityData.length === 0) {activityID = (await addActivity(activityName))[0].ActivityID;}
-        //     else {activityID = activityData[0].ActivityID;}
-
-        //     // await addCompanyActivity(activityRequest[0].AddActivityID, activityID);
-        // });
+        data.Activities.forEach(async (activityName) => {
+            const activityData = await getActivity({ name: activityName });
+            activityData.length > 0 ?
+            await addCompanyActivity(activityRequest[0].AddActivityID, activityData[0].ActivityID): null;
+        });
 
         return activityRequest;
     } catch (e) {
-        console.count('error')
+        console.count('ActivityRequest already added or invalid')
     }
 }
 
@@ -122,30 +115,30 @@ export async function addStampLicenceRequest(request: RequestsType) {
             RequestDate: data.RequestDate,
         }).returning();
     } catch (e) {
-        console.count('error')
+        console.count('StampLicenceRequest already added or invalid')
     }
 }
 
-async function addPermission(PermissionName: string) {
+export async function addPermission(PermissionName: string) {
     return await db.insert(schema.PermissionsTable).values({
         PermissionName: PermissionName,
     }).returning();
 }
 
-async function addAccountPermission(AccountID: number, PermissionID: number) {
+export async function addAccountPermission(AccountID: number, PermissionID: number) {
     return await db.insert(schema.AccountPermissionsTable).values({
         AccountID: AccountID,
         PermissionID: PermissionID,
     }).returning();
 }
 
-async function addActivity(activityName: string) {
+export async function addActivity(activityName: string) {
     return await db.insert(schema.ActivitiesTable).values({
         ActivityName: activityName,
     }).returning();
 }
 
-async function addCompanyActivity(ActivityRequestID: number, ActivityID: number) {
+export async function addCompanyActivity(ActivityRequestID: number, ActivityID: number) {
     return await db.insert(schema.CompanyActivitiesTable).values({
         ActivityRequestID: ActivityRequestID,
         ActivityID: ActivityID,

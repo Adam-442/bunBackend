@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "018001d5-95aa-44d6-b183-bd1be0898442",
+  "id": "ac8982bb-31e9-4950-8d1c-d6ba874c382b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "AccountPermissions": {
@@ -75,7 +75,7 @@
           "name": "ActivityName",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         }
       },
@@ -402,7 +402,7 @@
           "name": "PermissionName",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         }
       },
