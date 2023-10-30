@@ -1,17 +1,17 @@
 import { Elysia } from "elysia";
 import { RequestsType } from "./APIUtils/csvDataTypes";
 import { uploadData } from "./APIUtils/dataHandler";
-import { getAccountPermissions, getNewAccountRequest, getRequest } from "./database/selects";
+import { getAccountPermissions, getNewAccountRequest, getPermission, getRequest } from "./database/selects";
 import { addPermission } from "./database/inserts";
 
 const app = new Elysia();
 
 app.get("/", () => `This is the backend, Try posting to http://${app.server?.hostname}:${app.server?.port}/uploadData`);
 
-app.post("/uploadData", async ({ body }) => {
+app.post("/uploadData", ({ body }) => {
   try {
     const start = performance.now();
-    const uploadStatus = await uploadData(body as RequestsType[]);
+    const uploadStatus = uploadData(body as RequestsType[]);
     const end = performance.now();
     return new Response(`${uploadStatus} in ${end-start}ms`, { status: 200 });
   } catch (error) {
@@ -45,9 +45,13 @@ app.get("/getAccountPermissions/:accountID", async ({ params: { accountID }}) =>
   return new Response(`${JSON.stringify(await getAccountPermissions(id))}`, { status: 200 });  
 });
 
-app.post("/addPermission/:name", ({ params: { name }}) => {
-  addPermission(name);
-  return new Response(`Permission: "${name}" has been added`, { status: 200 });  
+app.post("/addPermission/:name", async ({ params: { name }}) => {
+  const result = await addPermission(name);
+  return new Response(`Permission: "${result[0].PermissionName}" has been added with ID (${result[0].PermissionID})`, { status: 200 });  
+});
+
+app.get("/getAllPermissions", async () => {
+  return new Response(`${JSON.stringify(await getPermission())}`, { status: 200 });
 });
 
 app.listen(3000);
