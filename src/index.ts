@@ -1,12 +1,13 @@
 import { Elysia } from "elysia";
 import { RequestsType } from "./APIUtils/csvDataTypes";
 import { uploadData } from "./APIUtils/dataHandler";
-import { getAccountPermissions, getNewAccountRequest, getPermission, getRequest } from "./database/selects";
-import { addPermission } from "./database/inserts";
+import { getAccountPermissions, getActivity, getAddActivityRequest, getCompanyActivities, getNewAccountRequest, getPermission, getRequest } from "./database/selects";
+import { addActivity, addPermission } from "./database/inserts";
+import { cors } from '@elysiajs/cors'
 
-const app = new Elysia();
+const app = new Elysia().use(cors());
 
-app.get("/", () => `This is the backend, Try posting to http://${app.server?.hostname}:${app.server?.port}/uploadData`);
+app.get("/", () => `This is the backend, Try posting to http://${app.server?.hostname}:${app.server?.port}/uploadData with a JSON Body.`);
 
 app.post("/uploadData", ({ body }) => {
   try {
@@ -54,7 +55,32 @@ app.get("/getAllPermissions", async () => {
   return new Response(`${JSON.stringify(await getPermission())}`, { status: 200 });
 });
 
-app.listen(3000);
+app.get("/getAllActivityRequests", async () => {
+  return new Response(`${JSON.stringify(await getAddActivityRequest())}`, { status: 200 });  
+});
+
+app.get("/getActivityRequest/:Requestid", async ({ params: { Requestid }}) => {
+  const id = Number(Requestid);
+  if (Number.isNaN(id)) return new Response("Error: Requestid must be a number", { status: 400 });
+  return new Response(`${JSON.stringify(await getAddActivityRequest({RequestID: id}))}`, { status: 200 });  
+});
+
+app.get("/getCompanyActivities/:activityRequestID", async ({ params: { activityRequestID }}) => {
+  const id = Number(activityRequestID);
+  if (Number.isNaN(id)) return new Response("Error: activityRequestID must be a number", { status: 400 });
+  return new Response(`${JSON.stringify(await getCompanyActivities(id))}`, { status: 200 });  
+});
+
+app.post("/addActivity/:name", async ({ params: { name }}) => {
+  const result = await addActivity(name);
+  return new Response(`Activity: "${result[0].ActivityName}" has been added with ID (${result[0].ActivityID})`, { status: 200 });  
+});
+
+app.get("/getAllActivities", async () => {
+  return new Response(`${JSON.stringify(await getActivity())}`, { status: 200 });
+});
+
+app.listen(5500);
 
 console.log(
   `🦊 Elysia is running at http://${app.server?.hostname}:${app.server?.port}`

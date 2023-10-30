@@ -29,9 +29,11 @@ export async function getInspectionRequest(by?: {InspectionID?: number}) {
     return await db.select().from(schema.InspectionRequestsTable);
 }
 
-export async function getAddActivityRequest(by?: {AddActivityID?: number}) {
+export async function getAddActivityRequest(by?: {AddActivityID?: number, RequestID?: number}) {
     if (by?.AddActivityID)
         return await db.select().from(schema.AddActivityRequestsTable).where(eq(schema.AddActivityRequestsTable.AddActivityID, by.AddActivityID));
+    else if (by?.RequestID)
+        return await db.select().from(schema.AddActivityRequestsTable).fullJoin(schema.RequestsTable, eq(schema.RequestsTable.RequestID, schema.AddActivityRequestsTable.RequestID)).where(eq(schema.AddActivityRequestsTable.RequestID, by.RequestID));
     return await db.select().from(schema.AddActivityRequestsTable);
 }
 
@@ -67,11 +69,8 @@ export async function getActivity(by?: {id?: number, name?: string}) {
 }
 
 export async function getCompanyActivities(ActivityRequestID: number) {
-    let activityNames: string[] = [];
-    const companyActivities = await db.select().from(schema.CompanyActivitiesTable).where(eq(schema.CompanyActivitiesTable.ActivityRequestID, ActivityRequestID));
-    companyActivities.forEach(async (activity) => {
-        const activityData = await getActivity({id :activity.ActivityID});
-        if (activityData[0].ActivityName) activityNames.push(activityData[0].ActivityName);
-    });
-    return activityNames;
+    const result = await db.select().from(schema.CompanyActivitiesTable).where(eq(schema.CompanyActivitiesTable.ActivityRequestID, ActivityRequestID));
+    return await Promise.all (
+        result.map(async (ComAct) => (await getActivity({id: ComAct.ActivityID}))[0].ActivityName)
+    )
 }
