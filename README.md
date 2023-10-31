@@ -63,6 +63,10 @@ There are many rules to inserting data into the database, **some** include:
 
 Violating any of the rules will result in omitting the row trying to insert. and **no response** will be provided to the front-end, the code will continue to add the following rows as long as they match the rules.
 
+## SQLite Schema
+
+![Schema](https://github.com/Adam-442/bunBackend/assets/98691783/0c9b6e90-09a2-414c-9154-f7eea17fb328)<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="2040.1224202403018" height="637.2521021213407">
+
 ## Packages, Libraries and frameworks
 
  - **[BunJS](https://bun.sh/):** JavaScript Runtime, faster than NodeJS.
