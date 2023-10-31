@@ -65,7 +65,7 @@ Violating any of the rules will result in omitting the row trying to insert. and
 
 ## SQLite Schema
 
-![Schema](https://github.com/Adam-442/bunBackend/assets/98691783/0c9b6e90-09a2-414c-9154-f7eea17fb328)<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="2040.1224202403018" height="637.2521021213407">
+![SchemaLight](https://github.com/Adam-442/bunBackend/assets/98691783/e091847b-36fd-4531-b5da-e90e17d9c19b)
 
 ## Packages, Libraries and frameworks
 
